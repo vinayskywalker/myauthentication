@@ -14,14 +14,15 @@ def connect_google():
 	flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('client_secret.json',scopes=SCOPES)
 	flow.redirect_uri = 'https://myauth-django.herokuapp.com/oauth2callback'
 	authorization_url, state = flow.authorization_url(access_type='offline',include_granted_scopes='true')
-
-
+	return authorization_url,state
 
 
 def login(request):
-	
+
 	if request.method == 'POST':
-		print(request)
+		authorization_url,state = connect_google()
+		response = redirect(to=authorization_url)
+		
 
 	return render(request,'login.html')
 
