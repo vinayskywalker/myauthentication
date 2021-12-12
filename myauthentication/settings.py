@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-(_-p(2%#3=%+irlolo7gb$lj5_#5n53l^fkcm(-2*2i14$-tw)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1','sampledomain.com','http://localhost:8000/']
+ALLOWED_HOSTS = ['127.0.0.1','myauth-django.herokuapp.com/','http://localhost:8000/']
 SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
