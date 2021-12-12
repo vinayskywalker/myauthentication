@@ -3,6 +3,7 @@ from django.conf import settings
 from django.shortcuts import redirect
 import google.oauth2.credentials
 import google_auth_oauthlib.flow
+from django.http import HttpResponseRedirect
 
 
 SCOPES = ['https://www.googleapis.com/auth/calendar']
@@ -18,11 +19,12 @@ def connect_google():
 
 
 def login(request):
+	authorization_url,state = connect_google()
+	print(authorization_url)
+	print(state)
+	# response = redirect(to=authorization_url)
+	return HttpResponseRedirect(authorization_url)
 
-	if request.method == 'POST':
-		authorization_url,state = connect_google()
-		response = redirect(to=authorization_url)
-		
 
 	return render(request,'login.html')
 
