@@ -5,6 +5,15 @@ import google.oauth2.credentials
 import google_auth_oauthlib.flow
 from django.http import HttpResponseRedirect
 from googleapiclient.discovery import build
+from django.urls import reverse
+import datetime
+from datetime import timedelta
+import time
+from django.http import HttpResponse
+import random
+from uuid import uuid4, uuid5
+import pytz
+
 
 
 
@@ -23,7 +32,21 @@ def oauthcallback(request):
 	flow.fetch_token(authorization_response=authorization_response)
 	credentials = flow.credentials
 	service = build('calendar','v3',credentials=credentials)
-	return render(request,'oauthcallback.html',context={"myrequest":request,"service":service})
+	today_date = datetime.datetime.today() - timedelta(days=1)
+	first_day = today_date.isoformat()+'Z'
+	last_day_month = datetime.datetime.today() + timedelta(days=31)
+	last_day_month = last_day_month.isoformat()+'Z'
+
+	calendar_ids = []
+    while True:
+        calendar_list = service.calendarList().list(pageToken=page_token).execute()
+        for calendar_list_entry in calendar_list['items']:
+            calendar_ids.append(calendar_list_entry['id'])
+        page_token = calendar_list.get('nextPageToken')
+        if not page_token:
+            break
+    
+	return render(request,'oauthcallback.html',context={"myrequest":request,"service":calendar_ids})
 
 
 
