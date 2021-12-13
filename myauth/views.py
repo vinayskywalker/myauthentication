@@ -31,8 +31,8 @@ def connect_google():
 def login(request):
 	authorization_url,state = connect_google()
 	mystate = state
-	response = redirect(to=authorization_url)
-	# HttpResponseRedirect(authorization_url)
+	# response = redirect(to=authorization_url)
+	return HttpResponseRedirect(authorization_url)
 
 	return render(request,'login.html')
 
