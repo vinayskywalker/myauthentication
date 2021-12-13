@@ -6,4 +6,6 @@ from .import views
 urlpatterns = [
     path('login',views.login),
     path('',views.index),
+    path('oauthcallback',views.oauthcallback),
+    
 ]
