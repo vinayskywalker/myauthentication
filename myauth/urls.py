@@ -7,7 +7,7 @@ urlpatterns = [
     path('login',views.login),
     path('',views.index),
     path('oauthcallback/',views.oauthcallback),
-    path('caldetails/',view.caldetails,name='calendar_details'),
-    
+    path('caldetails/',views.caldetails,name='calendar_details'),
+
     
 ]
