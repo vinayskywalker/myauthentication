@@ -15,7 +15,7 @@ myresponse = None
 def oauthcallback(request):
 	state = mystate
 	flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('client_secret.json',scopes=SCOPES,state=state)
-	flow.redirect_uri = 'https://myauth-django.herokuapp.com/oauthcallback'
+	flow.redirect_uri = 'https://myauth-django.herokuapp.com/oauthcallback/'
 	return render(request,'oauthcallback.html',context={"myrequest":request})
 
 
@@ -23,7 +23,7 @@ def oauthcallback(request):
 def connect_google():
 	print("connecting")
 	flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('client_secret.json',scopes=SCOPES)
-	flow.redirect_uri = 'https://myauth-django.herokuapp.com/'
+	flow.redirect_uri = 'https://myauth-django.herokuapp.com/oauthcallback/'
 	authorization_url, state = flow.authorization_url(access_type='offline',include_granted_scopes='true')
 	return authorization_url,state
 
