@@ -42,7 +42,7 @@ def oauthcallback(request):
 		if not page_token:
 			break
 	# return HttpResponseRedirect(reverse('calendar_details',kwargs={'caldetails':calendar_ids}))
-    return render(request,'oauthcallback.html',context={"myrequest":request,"service":calendar_ids})
+	return render(request,'oauthcallback.html',context={"myrequest":request,"service":calendar_ids})
 
 def caldetails(request,caldetails=None):
 	return render(request,'cal_details.html',context={"caldetails":caldetails})
