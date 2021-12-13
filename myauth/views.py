@@ -41,10 +41,12 @@ def oauthcallback(request):
 		page_token = calendar_list.get('nextPageToken')
 		if not page_token:
 			break
-	return HttpResponseRedirect('/caldetails')
+	request.session['caldetails'] = calendar_ids
+	return HttpResponseRedirect(reverse('calendar_details'))
 	# return render(request,'oauthcallback.html',context={"myrequest":request,"service":calendar_ids})
 
-def caldetails(request,caldetails=None):
+def caldetails(request):
+	caldetails = request.session['caldetails']
 	return render(request,'cal_details.html',context={"caldetails":caldetails})
 
 def connect_google():
