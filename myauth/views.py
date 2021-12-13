@@ -14,9 +14,15 @@ myresponse = None
 
 def oauthcallback(request):
 	state = mystate
+	state = request.session['state']
+
 	flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file('client_secret.json',scopes=SCOPES,state=state)
 	flow.redirect_uri = 'https://myauth-django.herokuapp.com/oauthcallback/'
-	return render(request,'oauthcallback.html',context={"myrequest":request})
+	authorization_response = request.build_absolute_uri()
+	flow.fetch_token(authorization_response=authorization_response)
+	credentials = flow.credentials
+	service = build('calendar','v3',credentials=credentials)
+	return render(request,'oauthcallback.html',context={"myrequest":request,"service":service})
 
 
 
@@ -31,6 +37,7 @@ def connect_google():
 def login(request):
 	authorization_url,state = connect_google()
 	mystate = state
+	request.session['state'] = state
 	return HttpResponseRedirect(authorization_url)
 
 
